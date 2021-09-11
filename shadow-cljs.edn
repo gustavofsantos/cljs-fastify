@@ -1,0 +1,15 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src"]
+
+ :dependencies
+ []
+
+ :builds
+ {:app
+  {:main app.core/main
+   :target :node-script
+   :output-to "dist/app.js"
+   :devtools
+   {:after-load app.core/start!
+    :before-load app.core/stop!}}}}

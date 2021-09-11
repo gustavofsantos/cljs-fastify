@@ -2,5 +2,15 @@
   "name": "cljs-fastify",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "shadow-cljs watch app",
+    "build": "shadow-cljs release app"
+  },
+  "dependencies": {
+    "fastify": "^3.21.0"
+  },
+  "devDependencies": {
+    "shadow-cljs": "^2.15.9"
+  }
 }
