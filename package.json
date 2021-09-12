@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "shadow-cljs watch app",
-    "build": "shadow-cljs release app"
+    "test": "shadow-cljs compile test && node dist/tests.js",
+    "build": "shadow-cljs release app",
+    "repl": "shadow-cljs node-repl"
   },
   "dependencies": {
     "fastify": "^3.21.0"

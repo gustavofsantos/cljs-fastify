@@ -4,11 +4,15 @@
  :dependencies []
 
  :builds
- {:app
-  {:main app.core/main
-   :target :node-script
-   :compiler-options {:infer-externs :auto}
-   :output-to "dist/app.js"
-   :devtools
-   {:after-load app.core/start!
-    :before-load app.core/stop!}}}}
+  {:app
+    {:main app.core/main
+     :target :node-script
+     :compiler-options {:infer-externs :auto}
+     :output-to "dist/app.js"
+     :devtools
+     {:after-load app.core/start!
+      :before-load app.core/stop!}}
+  :test
+    {:target :node-test
+     :output-to "dist/tests.js"
+     :autorun true}}}

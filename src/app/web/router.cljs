@@ -2,6 +2,7 @@
   (:require
     [app.web.controllers.app :as app]))
 
-
 (defn router [^js app]
-  (.get app "/health" app/health))
+  (.get app "/health"
+        (fn [_ reply]
+          (.send reply (clj->js (app/health))))))
