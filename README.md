@@ -21,3 +21,8 @@ $ yarn dev
 $ node dist/app.js
 ```
 
+Running tests
+
+```sh
+$ yarn test
+```
