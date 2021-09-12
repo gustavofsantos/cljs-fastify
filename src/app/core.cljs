@@ -19,14 +19,11 @@
 
 
 (defn start! []
-  ;; called by main and after reloading code
-  (reset! server (start-server)))
+  (swap! server (start-server)))
 
 (defn stop! []
-  ;; called before reloading code
   (.close @server)
-  (reset! server nil))
+  (swap! server nil))
 
 (defn main []
-  ;; executed once, on startup, can do one time setup here
   (start!))
