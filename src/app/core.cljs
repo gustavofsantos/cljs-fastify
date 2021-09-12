@@ -1,23 +1,22 @@
-  
 (ns app.core
-  (:require ["fastify" :as fastify]))
+  (:require
+    ["fastify" :as fastify]
+    [app.web.router :as r]))
 
-;; currently broken in shadow-cljs
+(enable-console-print!)
 (set! *warn-on-infer* true)
 
 (defonce server (atom nil))
 
-(defn on-get [request reply]
-  (.send reply "Hello there"))
+(defn on-listen []
+  (println "App is running on port 3000!"))
 
 (defn start-server []
   (println "Starting server")
   (let [app (fastify {:logger true})]
-    (.get app "/" on-get)
-    (.listen app 3000)))
+    (r/router app)
+    (.listen app 3000 on-listen)))
 
-(defn on-listen []
-  (println "App is running on port 3000!"))
 
 (defn start! []
   ;; called by main and after reloading code
