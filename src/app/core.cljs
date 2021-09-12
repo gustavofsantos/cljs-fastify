@@ -6,24 +6,27 @@
 (enable-console-print!)
 (set! *warn-on-infer* true)
 
-(defonce server (atom nil))
-
-(defn on-listen []
-  (println "App is running on port 3000!"))
+(defonce server (volatile! nil))
 
 (defn start-server []
-  (println "Starting server")
   (let [app (fastify {:logger true})]
     (r/router app)
-    (.listen app 3000 on-listen)))
+    (.listen app 3000 (fn [err]
+                        (js/console.log "Server started")
+                        (vreset! server app)))))
 
 
 (defn start! []
-  (swap! server (start-server)))
+  (js/console.warn "Starting server")
+  (start-server))
 
-(defn stop! []
-  (.close @server)
-  (swap! server nil))
+(defn stop! [done]
+  (js/console.warn "Stopping server")
+  (when-some [svr @server]
+    (.close svr
+            (fn [err]
+              (js/console.warn "Server stopped" err)
+              (done)))))
 
 (defn main []
   (start!))

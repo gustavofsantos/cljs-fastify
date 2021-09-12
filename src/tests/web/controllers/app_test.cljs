@@ -5,4 +5,4 @@
 
 (t/deftest should-return-success-true
   (let [result (app/health)]
-    (t/is (== result {:success true}))))
+    (t/is (= result {:success true}))))

@@ -1,27 +1,27 @@
 (ns tests.web.routes.app-routes-test
   (:require
-    ["fastify" :as fastify]
-    [app.web.router :as r]
-    [cljs.test :as t]
+    [cljs.test :refer [async deftest testing is] :include-macros true]
+    [tests.web.utils.http-utils :as utils]
     [cljs.core.async :refer [go]]
     [cljs.core.async.interop :refer-macros [<p!]]))
 
-(defn make-server []
-  (let [app (fastify)]
-    (r/router app)
-    app))
+(deftest body-success
+  (testing "GET /health should return { success: true } as body"
+    (async done
+          (go
+            (let [response (<p! (utils/GET! "/health"))
+                  result (utils/to-map response)
+                  body (:body result)]
+              (is (= {:success true} body))
+              (done))))))
 
-(defn GET! [route app]
-  (go 
-    (let [response (<p!
-                     (.inject app (clj->js {:method "GET"
-                                            :url route})))]
-      (js->clj (<p! response)))))
+(deftest status-code-success 
+  (testing "GET /health should return status code 200"
+    (async done
+           (go
+             (let [response (<p! (utils/GET! "/health"))
+                   result (utils/to-map response)
+                   status-code (:statusCode result)]
+               (is (= 200 status-code))
+               (done))))))
 
-(t/deftest should-get-health
-  (go 
-    (let [server (make-server)
-          result (<p! (GET! "/health" server))]
-      
-      (t/is 
-        (== result {:success true})))))

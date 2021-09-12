@@ -1,7 +1,9 @@
 ;; shadow-cljs configuration
 {:source-paths ["src"]
 
- :dependencies []
+ :dependencies [[cider/cider-nrepl "0.22.4"]]
+
+ :nrepl {:port 3333}
 
  :builds
   {:app
@@ -11,7 +13,7 @@
      :output-to "dist/app.js"
      :devtools
      {:after-load app.core/start!
-      :before-load app.core/stop!}}
+      :before-load-async app.core/stop!}}
   :test
     {:target :node-test
      :output-to "dist/tests.js"
